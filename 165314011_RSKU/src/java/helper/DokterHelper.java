@@ -8,6 +8,7 @@ package helper;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import pojos.Dokter;
 import util.RSKUHibernateUtil;
 
@@ -28,5 +29,16 @@ public class DokterHelper {
         result = q.list();
         session.close();
         return result;
+    }
+
+    public void addNewDokter(
+            String nama,
+            String spesialis) {
+        Session session = RSKUHibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        Dokter dokter = new Dokter(nama, spesialis);
+        session.saveOrUpdate(dokter);
+        tx.commit();
+        session.close();
     }
 }
