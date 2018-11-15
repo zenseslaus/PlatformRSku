@@ -13,6 +13,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
@@ -54,6 +55,21 @@ public class LocationResource {
                 .build();
     }
 
+    @POST
+    @Path("addLocation")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addNewLocation(String data) {
+        Gson gson = new Gson();
+        Location location = gson.fromJson(data, Location.class);
+        LocationHelper helper = new LocationHelper();
+        helper.addNewLocation(
+                location.getLat(),
+                location.getLng(),
+                location.getName());
+        return Response.status(200)
+                .entity(location)
+                .build();
+    }
     /**
      * PUT method for updating or creating an instance of LocationResource
      *

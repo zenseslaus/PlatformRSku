@@ -13,6 +13,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
@@ -54,6 +55,20 @@ public class DokterResource {
                 .build();
     }
 
+    @POST
+    @Path("addDokter")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addNewDokter(String data) {
+        Gson gson = new Gson();
+        Dokter dokter = gson.fromJson(data, Dokter.class);
+        DokterHelper helper = new DokterHelper();
+        helper.addNewDokter(
+                dokter.getNama(),
+                dokter.getSpesialis());
+        return Response.status(200)
+                .entity(dokter)
+                .build();
+    }
     /**
      * PUT method for updating or creating an instance of DokterResource
      *

@@ -8,11 +8,13 @@ package service;
 import com.google.gson.Gson;
 import helper.KlinikHelper;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
@@ -53,6 +55,21 @@ public class KlinikResource {
                 .build();
     }
 
+    @POST
+    @Path("addKlinik")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addNewKlinik(String data) {
+        Gson gson = new Gson();
+        Klinik klinik = gson.fromJson(data, Klinik.class);
+        KlinikHelper helper = new KlinikHelper();
+        helper.addNewKlinik(
+                klinik.getIdKlinik(),
+                klinik.getNama(),
+                klinik.getSpesialis());
+        return Response.status(200)
+                .entity(klinik)
+                .build();
+    }
     /**
      * PUT method for updating or creating an instance of KlinikResource
      *
