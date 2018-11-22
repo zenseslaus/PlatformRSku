@@ -29,10 +29,12 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(service.AntrianResource.class);
         resources.add(service.DokterResource.class);
         resources.add(service.KlinikResource.class);
         resources.add(service.LocationResource.class);
         resources.add(service.PasienResource.class);
+        resources.add(service.UserResource.class);
     }
     
 }

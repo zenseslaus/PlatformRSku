@@ -46,4 +46,20 @@ public class PasienHelper {
         tx.commit();
         session.close();
     }
+
+    public Pasien cariPasien(String nik) {
+        Session session = RSKUHibernateUtil.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        String query = "from Pasien p where p.nik=:nik";
+        Query q = session.createQuery(query);
+        q.setParameter("nik", nik);
+        List<Pasien> list = q.list();
+        tx.commit();
+        session.close();
+        if (list.size() > 0) {
+            return list.get(0);
+        } else {
+            return null;
+        }
+    }
 }
