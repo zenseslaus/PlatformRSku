@@ -66,6 +66,14 @@ and open the template in the editor.
                 color: white;
                 font-family: 'Cabin', sans-serif;
             }
+
+            #map{
+                height:95%;
+            }
+            html,body{
+                margin: 0;
+                padding: 0;
+            }
             @media (max-width: 600px) {
                 nav, article {
                     width: 100%;
@@ -87,39 +95,36 @@ and open the template in the editor.
                 </ul>
             </nav>
             <article>
-
-                <button type="button" onclick="loadDoc()" id="btn">Tampilkan Lokasi</button>
-                <div id="map"></div>
+                Tampil Peta
                 <p id="demo"></p>
+                <div id="map"></div>
+                <script>
+                    var map;
+                    var url = "http://202.94.83.190:8080/165314011_RSKU/webresources/location";
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+
+                            var obj = JSON.parse(this.responseText);
+                            map = new google.maps.Map(document.getElementById('map'), {
+                                center: {lat: obj[0].lat, lng: obj[0].lng},
+                                zoom: 8
+                            });
+                            var marker = [];
+                            for (var i = 0; i < obj.length; i++) {
+                                marker[i] = new google.maps.Marker({position: {lat: obj[i].lat, lng: obj[i].lng}, map: map});
+                            }
+                        }
+                    };
+                    xhttp.open("GET", url, true);
+                    xhttp.send();
+                </script>       
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnD2l64I6G6fUkPpc3D79Jcau30v8xEKE&callback=initMap"
+                async defer></script>
             </article>
         </section>
         <footer>
             <p>Ip Address 202.94.83.190</p>
         </footer>
-        <script>
-            var map;
-            function loadDoc() {
-                var url = "http://202.94.83.190:8080/165314011_RSKU/webresources/location";
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById("demo").innerHTML = this.responseText;
-                        var myObj = JSON.parse(this.responseText);
-                        map = new google.maps.Map(
-                                document.getElementById('map'), {center: {lat: myObj[0].lat, lng: myObj[0].lng},
-                            zoom: 8});
-                        var marker = [];
-                        for (var i = 0; i < myObj.length; i++) {
-                            marker[i] = new google.maps.Marker(
-                                    {position: {lat: myObj[i].lat, lng: myObj[i].lng},
-                                        map: map});
-                        }
-                        alert("berhasil");
-                    }
-                };
-                xhttp.open('GET', url, true);
-                xhttp.send();
-            }
-        </script>
     </body>
 </html>

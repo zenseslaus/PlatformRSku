@@ -1,12 +1,15 @@
+
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
     <head>
-        <title>Tampilkan Dokter</title>
+        <title>Login</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Cabin|Poppins|Ubuntu" rel="stylesheet">
@@ -66,35 +69,6 @@ and open the template in the editor.
                 color: white;
                 font-family: 'Cabin', sans-serif;
             }
-            /* Scroll Table */
-            .fixed_header{
-                width: 800px;
-                table-layout: fixed;
-                border-collapse: collapse;
-            }
-
-            .fixed_header tbody{
-                display:block;
-                width: 100%;
-                overflow: auto;
-                height: 400px;
-            }
-
-            .fixed_header thead tr {
-                display: block;
-            }
-
-            .fixed_header thead {
-                background: black;
-                color:#fff;
-            }
-
-            .fixed_header th, .fixed_header td {
-                padding: 5px;
-                text-align: left;
-                width: 400px;
-            }
-
             @media (max-width: 600px) {
                 nav, article {
                     width: 100%;
@@ -103,45 +77,45 @@ and open the template in the editor.
             }
         </style>
     </head>
-    <body>
-        <header>
-            <h2> Rumah Sakit "G-Hospital"</h2>
-        </header>
-        <section>
-            <nav>
-                <ul>
-                    <li><a href="klinik.html">Tampilkan Klinik</a></li>
-                    <li><a href="dokter.html">Tampilkan Dokter</a></li>
-                    <li><a href="location.html">Tampilkan Lokasi</a></li>
-                </ul>
-            </nav>
-            <article>
-                List Dokter
-                <p id="demo"></p>
-            </article>
-        </section>
-        <footer>
-            <p>Ip Address 202.94.83.190</p>
-        </footer>
+    <body >
+
+        <div class="container">
+            <div class ="form-group">
+                <input style="width: 200px;" type="text" placeholder="masukkan email" id="b" required/>
+            </div>
+            <div class ="form-group">
+                <input style="width: 200px;" type="password" placeholder="masukkan password" id="a" required/>
+            </div>
+            <div class="clearfix">
+                <button type="button" class="button" onclick="loadDoc()" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>LOGIN </span></font></button>
+            </div><br><br>
+            <p id="demo"></p>
+        </div>
         <script>
-            var url = "http://202.94.83.190:8080/165314011_RSKU/webresources/dokter";
-            var xhttp = new XMLHttpRequest();
-            var x;
-            var txt = "";
-            xhttp.open("GET", url, true);
-            xhttp.send();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    var myObj = JSON.parse(this.responseText);
-                    txt += "<table border='1' bgColor='white' class='fixed_header'>"
-                    txt += "<tr><td>" + "Id Dokter" + "</td><td>" + "Nama" + "</td><td>" + "Spesialis" + "</td></tr>"
-                    for (x in myObj) {
-                        txt += "<tr><td>" + myObj[x].id + "</td><td>" + myObj[x].nama + "</td><td>" + myObj[x].spesialis + "</td></tr>";
+            function loadDoc() {
+                var email = b.value;
+                var pw = a.value;
+                var url = 'http://202.94.83.190:8080/165314034_Platform_rsku_webservice/webresources/user/login?email=' + email + '&password=' + pw;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var user = JSON.parse(this.responseText);
+                        if (user !== null) {
+                            alert("Selamat Datang " + user.email);
+                            open("MenuUser.html");
+                        } else {
+                            alert("Login Gagal");
+                        }
+                        document.getElementById("demo").innerHTML =
+                                this.responseText;
                     }
-                    txt += "</table>"
-                    document.getElementById("demo").innerHTML = txt;
-                }
+                };
+                xhttp.open("GET", url, true);
+                xhttp.send();
             }
         </script>
+        <div class = "footer">
+            <p> <font face = "Century Gothic" > This page is copyrighted 2018 by Bernad Bear </font></p>
+        </div>
     </body>
 </html>
