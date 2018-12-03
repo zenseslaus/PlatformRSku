@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Tampilkan Dokter</title>
+        <title>Tampilkan List Pasien</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Cabin|Poppins|Ubuntu" rel="stylesheet">
@@ -66,16 +66,17 @@ and open the template in the editor.
                 color: white;
                 font-family: 'Cabin', sans-serif;
             }
+
             /* Scroll Table */
             .fixed_header{
-                width: 800px;
+                width: 900px;
                 table-layout: fixed;
                 border-collapse: collapse;
             }
 
             .fixed_header tbody{
                 display:block;
-                width: 100%;
+                width: 900px;
                 overflow: auto;
                 height: 400px;
             }
@@ -110,13 +111,13 @@ and open the template in the editor.
         <section>
             <nav>
                 <ul>
-                    <li><a href="klinik.html">Tampilkan Klinik</a></li>
-                    <li><a href="dokter.html">Tampilkan Dokter</a></li>
-                    <li><a href="location.html">Tampilkan Lokasi</a></li>
+                    <li><a href="ListKlinik.html">Tampilkan Klinik</a></li>
+                    <li><a href="ListDokter.html">Tampilkan Dokter</a></li>
+                    <li><a href="ListLocation.html">Tampilkan Lokasi</a></li>
                 </ul>
             </nav>
             <article>
-                List Dokter
+                <strong> List Pasien </strong>
                 <p id="demo"></p>
             </article>
         </section>
@@ -124,7 +125,7 @@ and open the template in the editor.
             <p>Ip Address 202.94.83.190</p>
         </footer>
         <script>
-            var url = "http://202.94.83.190:8080/165314011_RSKU/webresources/dokter";
+            var url = "http://202.94.83.190:8080/165314011_RSKU/webresources/pasien";
             var xhttp = new XMLHttpRequest();
             var x;
             var txt = "";
@@ -134,9 +135,13 @@ and open the template in the editor.
                 if (this.readyState == 4 && this.status == 200) {
                     var myObj = JSON.parse(this.responseText);
                     txt += "<table border='1' bgColor='white' class='fixed_header'>"
-                    txt += "<tr><td>" + "Id Dokter" + "</td><td>" + "Nama" + "</td><td>" + "Spesialis" + "</td></tr>"
+                    txt += "<tr><td>" + "No RM" + "</td><td>" + "Nama"
+                            + "</td><td>" + "Alamat" + "</td><td>" + "NIK"
+                            + "</td><td>" + "Tanggal Lahir" + "</td><td>" + "Kelamin" + "</td></tr>"
                     for (x in myObj) {
-                        txt += "<tr><td>" + myObj[x].id + "</td><td>" + myObj[x].nama + "</td><td>" + myObj[x].spesialis + "</td></tr>";
+                        txt += "<tr><td>" + myObj[x].noRm + "</td><td>" + myObj[x].nama
+                                + "</td><td>" + myObj[x].alamat + "</td><td>" + myObj[x].nik
+                                + "</td><td>" + myObj[x].tanggalLahir + "</td><td>" + myObj[x].kelamin + "</td></tr>";
                     }
                     txt += "</table>"
                     document.getElementById("demo").innerHTML = txt;
