@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Tambah Klinik</title>
+        <title>Tampilkan Lokasi</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Cabin|Poppins|Ubuntu" rel="stylesheet">
@@ -66,6 +66,14 @@ and open the template in the editor.
                 color: white;
                 font-family: 'Cabin', sans-serif;
             }
+
+            #map{
+                height:95%;
+            }
+            html,body{
+                margin: 0;
+                padding: 0;
+            }
             @media (max-width: 600px) {
                 nav, article {
                     width: 100%;
@@ -87,45 +95,36 @@ and open the template in the editor.
                 </ul>
             </nav>
             <article>
-                <h3>Tambah Klinik</h3>
-                <form action="" id="registerForm" onsubmit="return make_json(this)" method="POST">
-                    <p id="output"> 
-                        <strong>
-                            ID Klinik: <br>
-                            <input type="text" id="idKlinik" required>
-                            <br><br>
-                            Nama Klinik: <br>
-                            <input type="text" id="nama" required>
-                            <br><br>
-                            Spesialis: <br>
-                            <input type="text" id="spesialis" required>
-                        </strong>
-                    </p> 
-                    <br>
-                    <button id="save" type="Submit">SIMPAN</button>
-                </form>
+                <strong>Lokasi Klinik</strong>  
+                <p id="demo"></p>
+                <div id="map"></div>
+                <script>
+                    var map;
+                    var url = "http://202.94.83.190:8080/165314011_RSKU/webresources/location";
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+
+                            var obj = JSON.parse(this.responseText);
+                            map = new google.maps.Map(document.getElementById('map'), {
+                                center: {lat: obj[0].lat, lng: obj[0].lng},
+                                zoom: 8
+                            });
+                            var marker = [];
+                            for (var i = 0; i < obj.length; i++) {
+                                marker[i] = new google.maps.Marker({position: {lat: obj[i].lat, lng: obj[i].lng}, map: map});
+                            }
+                        }
+                    };
+                    xhttp.open("GET", url, true);
+                    xhttp.send();
+                </script>       
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnD2l64I6G6fUkPpc3D79Jcau30v8xEKE&callback=initMap"
+                async defer></script>
             </article>
         </section>
         <footer>
             <p>Ip Address 202.94.83.190</p>
         </footer>
-        <script>
-            function make_json(form) {
-                var json = {
-                    "idKlinik": form.idKlinik.value,
-                    "nama": form.nama.value,
-                    "spesialis": form.spesialis.value
-                };
-                var html = JSON.stringify(json, 0, 100);
-                var Url = "http://202.94.83.190:8080/165314011_RSKU/webresources/klinik/addKlinik";
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', Url, false);
-                xhr.setRequestHeader("Content-type", "application/json");
-                xhr.send(html);
-                alert("Data tersimpan");
-                document.getElementById("output").innerHTML = html;
-                return false;
-            }
-        </script>
     </body>
 </html>
