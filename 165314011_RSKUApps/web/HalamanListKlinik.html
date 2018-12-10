@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Tampilkan List Dokter</title>
+        <title>Tampilkan List Klinik</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Cabin|Poppins|Ubuntu" rel="stylesheet">
@@ -66,6 +66,7 @@ and open the template in the editor.
                 color: white;
                 font-family: 'Cabin', sans-serif;
             }
+
             /* Scroll Table */
             .fixed_header{
                 width: 800px;
@@ -94,15 +95,8 @@ and open the template in the editor.
                 text-align: left;
                 width: 400px;
             }
-
-            a.button {
-                -webkit-appearance: button;
-                -moz-appearance: button;
-                appearance: button;
-
-                text-decoration: none;
-                color: initial;
-            }
+            
+            
             @media (max-width: 600px) {
                 nav, article {
                     width: 100%;
@@ -118,18 +112,13 @@ and open the template in the editor.
         <section>
             <nav>
                 <ul>
-                   <li><a href="ListDokter.html">Tampilkan List Dokter</a></li>
-                    <li><a href="ListPasien.html">Tampilkan List Pasien</a></li>
-                    <li><a href="ListLocation.html">Tampilkan List Location</a></li>
-                    <li><a href="ListKlinikAdmin.html">Tampilkan List Klinik</a></li>
-                    <li><a href="ListAntrian.html">Tampilkan List Antrian</a></li>
-
-                    <li><a href="index.html">Keluar</a></li>
+                    <li><a href="HalamanListKlinik.html">Tampilkan Klinik</a></li>
+                    <li><a href="HalamanListDokter.html">Tampilkan Dokter</a></li>
+                    <li><a href="HalamanPetaLocation.html">Tampilkan Lokasi</a></li>
                 </ul>
             </nav>
             <article>
-                <strong>List Dokter </strong>
-                <a href="tambahLocation.html" class="button">Tambah Lokasi</a>
+                <strong>List Klinik </strong> 
                 <p id="demo"></p>
             </article>
         </section>
@@ -137,7 +126,7 @@ and open the template in the editor.
             <p>Ip Address 202.94.83.190</p>
         </footer>
         <script>
-            var url = "http://202.94.83.190:8080/165314011_RSKU/webresources/location";
+            var url = "http://202.94.83.190:8080/165314011_RSKU/webresources/klinik";
             var xhttp = new XMLHttpRequest();
             var x;
             var txt = "";
@@ -147,11 +136,9 @@ and open the template in the editor.
                 if (this.readyState == 4 && this.status == 200) {
                     var myObj = JSON.parse(this.responseText);
                     txt += "<table border='1' bgColor='white' class='fixed_header'>"
-                    txt += "<tr><td>" + "Id Location" + "</td><td>" + "Nama"
-                            + "</td><td>" + "Latitude" + "</td><td>" + "Longitude" + "</td></tr>"
+                    txt += "<tr><td>" + "Nama" + "</td><td>" + "Spesialis" + "</td></tr>"
                     for (x in myObj) {
-                        txt += "<tr><td>" + myObj[x].id + "</td><td>" + myObj[x].name
-                                + "</td><td>" + myObj[x].lat + "</td><td>" + myObj[x].lng + "</td></tr>";
+                        txt += "<tr><td>" + myObj[x].nama + "</td><td>" + myObj[x].spesialis + "</td></tr>";
                     }
                     txt += "</table>"
                     document.getElementById("demo").innerHTML = txt;

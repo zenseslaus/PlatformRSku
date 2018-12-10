@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Tambah Klinik</title>
+        <title>Tampilkan List Antrian</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Cabin|Poppins|Ubuntu" rel="stylesheet">
@@ -66,6 +66,36 @@ and open the template in the editor.
                 color: white;
                 font-family: 'Cabin', sans-serif;
             }
+
+            /* Scroll Table */
+            .fixed_header{
+                width: 900px;
+                table-layout: fixed;
+                border-collapse: collapse;
+            }
+
+            .fixed_header tbody{
+                display:block;
+                width: 900px;
+                overflow: auto;
+                height: 400px;
+            }
+
+            .fixed_header thead tr {
+                display: block;
+            }
+
+            .fixed_header thead {
+                background: black;
+                color:#fff;
+            }
+
+            .fixed_header th, .fixed_header td {
+                padding: 5px;
+                text-align: left;
+                width: 400px;
+            }
+
             @media (max-width: 600px) {
                 nav, article {
                     width: 100%;
@@ -81,50 +111,45 @@ and open the template in the editor.
         <section>
             <nav>
                 <ul>
-                    <li><a href="ListKlinik.html">Tampilkan Klinik</a></li>
-                    <li><a href="ListDokter.html">Tampilkan Dokter</a></li>
-                    <li><a href="PetaLocation.html">Tampilkan Lokasi</a></li>
+                    <li><a href="HalamanListDokter.html">Tampilkan List Dokter</a></li>
+                    <li><a href="HalamanListPasien.html">Tampilkan List Pasien</a></li>
+                    <li><a href="HalamanListLocation.html">Tampilkan List Location</a></li>
+                    <li><a href="HalamanListKlinikAdmin.html">Tampilkan List Klinik</a></li>
+                    <li><a href="HalamanListAntrian.html">Tampilkan List Antrian</a></li>
+
+                    <li><a href="index.html">Keluar</a></li>
                 </ul>
             </nav>
             <article>
-                <h3>Tambah Klinik</h3>
-                <form action="" id="registerForm" onsubmit="return make_json(this)" method="POST">
-                    <p id="output"> 
-                        <strong>
-                            ID Klinik: <br>
-                            <input type="text" id="idKlinik" required>
-                            <br><br>
-                            Nama Klinik: <br>
-                            <input type="text" id="nama" required>
-                            <br><br>
-                            Spesialis: <br>
-                            <input type="text" id="spesialis" required>
-                        </strong>
-                    </p> 
-                    <br>
-                    <button id="save" type="Submit">SIMPAN</button>
-                </form>
+                <strong> List Antrian </strong>
+                <p id="demo"></p>
             </article>
         </section>
         <footer>
             <p>Ip Address 202.94.83.190</p>
         </footer>
         <script>
-            function make_json(form) {
-                var json = {
-                    "idKlinik": form.idKlinik.value,
-                    "nama": form.nama.value,
-                    "spesialis": form.spesialis.value
-                };
-                var html = JSON.stringify(json, 0, 100);
-                var Url = "http://202.94.83.190:8080/165314011_RSKU/webresources/klinik/addKlinik";
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', Url, false);
-                xhr.setRequestHeader("Content-type", "application/json");
-                xhr.send(html);
-                alert("Data tersimpan");
-                document.getElementById("output").innerHTML = html;
-                return false;
+            var url = "http://202.94.83.190:8080/165314011_RSKU/webresources/Antrian";
+            var xhttp = new XMLHttpRequest();
+            var x;
+            var txt = "";
+            xhttp.open("GET", url, true);
+            xhttp.send();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myObj = JSON.parse(this.responseText);
+                    txt += "<table border='1' bgColor='white' class='fixed_header'>"
+                    txt += "<tr><td>" + "ID" + "</td><td>" + "Tanggal"
+                            + "</td><td>" + "No RM" + "</td><td>" + "Nama"
+                            + "</td><td>" + "Alamat" + "</td><td>" + "Nama Klinik" + "</td></tr>"
+                    for (x in myObj) {
+                        txt += "<tr><td>" + myObj[x].id + "</td><td>" + myObj[x].tanggal
+                                + "</td><td>" + myObj[x].noRm + "</td><td>" + myObj[x].nama
+                                + "</td><td>" + myObj[x].alamat + "</td><td>" + myObj[x].namaKlinik + "</td></tr>";
+                    }
+                    txt += "</table>"
+                    document.getElementById("demo").innerHTML = txt;
+                }
             }
         </script>
     </body>

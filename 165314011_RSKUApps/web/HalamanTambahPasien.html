@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Tambah Location</title>
+        <title>Daftar Pasien Baru</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Cabin|Poppins|Ubuntu" rel="stylesheet">
@@ -81,24 +81,33 @@ and open the template in the editor.
         <section>
             <nav>
                 <ul>
-                    <li><a href="ListKlinik.html">Tampilkan Klinik</a></li>
-                    <li><a href="ListDokter.html">Tampilkan Dokter</a></li>
-                    <li><a href="PetaLocation.html">Tampilkan Lokasi</a></li>
+                    <li><a href="HalamanListKlinik.html">Tampilkan Klinik</a></li>
+                    <li><a href="HalamanListDokter.html">Tampilkan Dokter</a></li>
+                    <li><a href="HalamanPetaLocation.html">Tampilkan Lokasi</a></li>
                 </ul>
             </nav>
             <article>
-                <h3>Tambah Location</h3>
+                <h3>Daftar Pasien Baru</h3>
                 <form action="" id="registerForm" onsubmit="return make_json(this)" method="POST">
                     <p id="output"> 
                         <strong>
-                            Lattitude: <br>
-                            <input type="text" id="lat" required>
-                            <br><br>
-                            Longitude: <br>
-                            <input type="text" id="lng" required>
-                            <br><br>
-                            Nama Klinik: <br>
+                            Nama: <br>
                             <input type="text" id="nama" required>
+                            <br><br>
+                            NIK: <br>
+                            <input type="text" id="nik" required>
+                            <br><br>
+                            Alamat: <br>
+                            <input type="text" id="alamat" required>
+                            <br><br>
+                            Tanggal: (format: YYYYMMDD)<br>
+                            <input type="text" id="tanggal" required>
+                            <br><br>
+                            Kelamin: <br>
+                            <select id="kelamin">
+                                <option value="Pria">Pria</option>
+                                <option value="Wanita">Wanita</option>
+                            </select>
                         </strong>
                     </p> 
                     <br>
@@ -112,12 +121,15 @@ and open the template in the editor.
         <script>
             function make_json(form) {
                 var json = {
-                    "lat": form.lat.value,
-                    "lng": form.lng.value,
-                    "nama": form.name.value
+                    "nama": form.nama.value,
+                    "noRm": form.nik.value,
+                    "nik": form.nik.value,
+                    "alamat": form.alamat.value,
+                    "tanggalLahir": form.tanggal.value,
+                    "kelamin": form.kelamin.value
                 };
                 var html = JSON.stringify(json, 0, 100);
-                var Url = "http://202.94.83.190:8080/165314011_RSKU/webresources/location/addLocation";
+                var Url = "http://202.94.83.190:8080/165314011_RSKU/webresources/pasien/addPasien";
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', Url, false);
                 xhr.setRequestHeader("Content-type", "application/json");

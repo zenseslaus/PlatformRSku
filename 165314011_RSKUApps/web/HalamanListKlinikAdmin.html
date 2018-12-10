@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Tampilkan List Antrian</title>
+        <title>Tampilkan List Klinik</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Cabin|Poppins|Ubuntu" rel="stylesheet">
@@ -69,14 +69,14 @@ and open the template in the editor.
 
             /* Scroll Table */
             .fixed_header{
-                width: 900px;
+                width: 800px;
                 table-layout: fixed;
                 border-collapse: collapse;
             }
 
             .fixed_header tbody{
                 display:block;
-                width: 900px;
+                width: 100%;
                 overflow: auto;
                 height: 400px;
             }
@@ -95,6 +95,14 @@ and open the template in the editor.
                 text-align: left;
                 width: 400px;
             }
+            a.button {
+                -webkit-appearance: button;
+                -moz-appearance: button;
+                appearance: button;
+
+                text-decoration: none;
+                color: initial;
+            }
 
             @media (max-width: 600px) {
                 nav, article {
@@ -111,17 +119,18 @@ and open the template in the editor.
         <section>
             <nav>
                 <ul>
-                    <li><a href="ListDokter.html">Tampilkan List Dokter</a></li>
-                    <li><a href="ListPasien.html">Tampilkan List Pasien</a></li>
-                    <li><a href="ListLocation.html">Tampilkan List Location</a></li>
-                    <li><a href="ListKlinikAdmin.html">Tampilkan List Klinik</a></li>
-                    <li><a href="ListAntrian.html">Tampilkan List Antrian</a></li>
+                   <li><a href="HalamanListDokter.html">Tampilkan List Dokter</a></li>
+                    <li><a href="HalamanListPasien.html">Tampilkan List Pasien</a></li>
+                    <li><a href="HalamanListLocation.html">Tampilkan List Location</a></li>
+                    <li><a href="HalamanListKlinikAdmin.html">Tampilkan List Klinik</a></li>
+                    <li><a href="HalamanListAntrian.html">Tampilkan List Antrian</a></li>
 
                     <li><a href="index.html">Keluar</a></li>
                 </ul>
             </nav>
             <article>
-                <strong> List Antrian </strong>
+                <strong>List Klinik </strong> 
+                <a href="HalamanTambahKlinik.html" class="button">Tambah Klinik</a>
                 <p id="demo"></p>
             </article>
         </section>
@@ -129,7 +138,7 @@ and open the template in the editor.
             <p>Ip Address 202.94.83.190</p>
         </footer>
         <script>
-            var url = "http://202.94.83.190:8080/165314011_RSKU/webresources/antrian";
+            var url = "http://202.94.83.190:8080/165314011_RSKU/webresources/klinik";
             var xhttp = new XMLHttpRequest();
             var x;
             var txt = "";
@@ -139,13 +148,11 @@ and open the template in the editor.
                 if (this.readyState == 4 && this.status == 200) {
                     var myObj = JSON.parse(this.responseText);
                     txt += "<table border='1' bgColor='white' class='fixed_header'>"
-                    txt += "<tr><td>" + "ID" + "</td><td>" + "Tanggal"
-                            + "</td><td>" + "No RM" + "</td><td>" + "Nama"
-                            + "</td><td>" + "Alamat" + "</td><td>" + "Nama Klinik" + "</td></tr>"
+                    txt += "<tr><td>" + "Id Klinik" + "</td><td>" +
+                            "Nama" + "</td><td>" + "Spesialis" + "</td></tr>"
                     for (x in myObj) {
-                        txt += "<tr><td>" + myObj[x].id + "</td><td>" + myObj[x].tanggal
-                                + "</td><td>" + myObj[x].noRm + "</td><td>" + myObj[x].nama
-                                + "</td><td>" + myObj[x].alamat + "</td><td>" + myObj[x].namaKlinik + "</td></tr>";
+                        txt += "<tr><td>" + myObj[x].idKlinik + "</td><td>"
+                                + myObj[x].nama + "</td><td>" + myObj[x].spesialis + "</td></tr>";
                     }
                     txt += "</table>"
                     document.getElementById("demo").innerHTML = txt;

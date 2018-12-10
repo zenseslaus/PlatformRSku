@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Tambah Dokter</title>
+        <title>Tambah Klinik</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Cabin|Poppins|Ubuntu" rel="stylesheet">
@@ -81,17 +81,20 @@ and open the template in the editor.
         <section>
             <nav>
                 <ul>
-                    <li><a href="ListKlinik.html">Tampilkan Klinik</a></li>
-                    <li><a href="ListDokter.html">Tampilkan Dokter</a></li>
-                    <li><a href="PetaLocation.html">Tampilkan Lokasi</a></li>
+                    <li><a href="HalamanListKlinik.html">Tampilkan Klinik</a></li>
+                    <li><a href="HalamanListDokter.html">Tampilkan Dokter</a></li>
+                    <li><a href="HalamanPetaLocation.html">Tampilkan Lokasi</a></li>
                 </ul>
             </nav>
             <article>
-                <h3>Tambah Dokter</h3>
+                <h3>Tambah Klinik</h3>
                 <form action="" id="registerForm" onsubmit="return make_json(this)" method="POST">
                     <p id="output"> 
                         <strong>
-                            Nama Dokter: <br>
+                            ID Klinik: <br>
+                            <input type="text" id="idKlinik" required>
+                            <br><br>
+                            Nama Klinik: <br>
                             <input type="text" id="nama" required>
                             <br><br>
                             Spesialis: <br>
@@ -109,11 +112,12 @@ and open the template in the editor.
         <script>
             function make_json(form) {
                 var json = {
+                    "idKlinik": form.idKlinik.value,
                     "nama": form.nama.value,
                     "spesialis": form.spesialis.value
                 };
                 var html = JSON.stringify(json, 0, 100);
-                var Url = "http://202.94.83.190:8080/165314011_RSKU/webresources/dokter/addDokter";
+                var Url = "http://202.94.83.190:8080/165314011_RSKU/webresources/klinik/addKlinik";
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', Url, false);
                 xhr.setRequestHeader("Content-type", "application/json");
@@ -124,5 +128,4 @@ and open the template in the editor.
             }
         </script>
     </body>
-
 </html>
