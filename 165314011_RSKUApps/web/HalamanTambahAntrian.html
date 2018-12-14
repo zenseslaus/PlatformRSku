@@ -76,7 +76,7 @@ and open the template in the editor.
             }
         </style>
     </head>
-    <body>
+    <body onload="loadKlinik()">
         <header>
             <h2> Rumah Sakit "G-Hospital"</h2>
         </header>
@@ -92,27 +92,27 @@ and open the template in the editor.
             </nav>
             <article>
                 <h3>Mendaftar Antrian</h3>
+                Cari: <br>
+                <input type="text" id="cari" placeholder="Masukkan NIK">
+                <button id="cariButton" onclick="loadDoc()">Cari</button>
                 <form action="" id="registerForm" onsubmit="return make_json(this)" method="POST">
                     <p id="output"> 
                         <strong>
-                            Cari: <br>
-                            <input type="text"  placeholder="Masukkan NIK" required>
-                            <button id="cariButton" onclick="loadDoc()" >Cari</button>
-                            <br><br>
+                            <br>
                             No Rm: <br>
-                            <input type="text" id="noRm" required>
+                            <input type="text" id="noRm" >
                             <br><br>
                             Nama: <br>
-                            <input type="text" id="nama" required>
+                            <input type="text" id="nama" >
                             <br><br>
                             Alamat: <br>
-                            <input type="text" id="alamat" required>
+                            <input type="text" id="alamat">
                             <br><br>
                             Tanggal: <br>
-                            <input type="text" id="tanggal" placeholder="YYYYMMDD" required>
+                            <input type="text" id="tanggal" placeholder="YYYYMMDD">
                             <br><br>
                             Nama Klinik: <br>
-                            <select id="namaKlinik" onload="loadKlinik()">
+                            <select id="namaKlinik" >
                             </select>
                         </strong>
                     </p> 
@@ -163,16 +163,16 @@ and open the template in the editor.
                 };
             }
             function loadDoc() {
-                var url = "http://202.94.83.190:8080/165314011_RSKU/webresources/pasien";
+                var url = "http://202.94.83.190:8080/165314011_RSKU/webresources/pasien/searchPasien?nik=" + cari.value;
                 var xhttp = new XMLHttpRequest();
                 xhttp.open("GET", url, true);
                 xhttp.send();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState === 4 && this.status === 200) {
                         var myObj = JSON.parse(this.responseText);
-                        document.getElementById("noRm").innerHTML = myObj.noRm;
-                        document.getElementById("nama").innerHTML = myObj.nama;
-                        document.getElementById("alamat").innerHTML = myObj.alamat;
+                        document.getElementById("noRm").value = myObj.noRm;
+                        document.getElementById("nama").value = myObj.nama;
+                        document.getElementById("alamat").value = myObj.alamat;
                     }
                 }
             }
